@@ -6,6 +6,18 @@
         </div>
     </div>
 
+    <!--
+    之後刪除區塊
+    -->
+    <br><br>
+    <h3 style="color: red">僅拉畫面未接API，目前初步設計將關鍵字數量視覺化，待中心確認整體需求與Spec，後續人員進行開發</h3><br>
+    <h5 style="color: red">開發可參考: https://skolem.csie.ntu.edu.tw/OD/mission1/index.php 之檔案</h5>
+    <h5 style="color: red">將該之檔案修改成API形式，此View將Response以npm的highcharts-vue套件進行視覺化</h5><br><br>
+    <!--
+    之後刪除區塊
+    -->
+
+
     <div>
         <Form @submit="getRetrieval">
             <label class="form-label">關鍵字：</label>
