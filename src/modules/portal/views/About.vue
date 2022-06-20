@@ -7,7 +7,7 @@
   </div>
 
 
-  <div style="margin-top: 80px;">
+  <div style="margin-top: 80px; display: flex; justify-content: center;">
     <div class="card" style="width: 90%;">
       <div style="text-align: center;"><img src="../../../assets/img/architecture.png" class="card-img-top"></div>
       <div class="card-body" style="margin-top: 50px;">
@@ -22,8 +22,10 @@
     </div>
 
 
-    <div style="margin-bottom: 250px;"></div>
   </div>
+
+
+   <div style="margin-bottom: 180px;"></div>
 </template>
 
 <script>

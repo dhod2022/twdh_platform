@@ -12,10 +12,13 @@
 
 
 
-  <Material />
+  <div style="margin-top: 5px;">
+    <Material />
+  </div>
 
 
-  <div style="margin-bottom: 150px;"></div>
+
+  <div style="margin-bottom: 175px;"></div>
 </template>
 
 

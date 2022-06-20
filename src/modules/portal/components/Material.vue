@@ -6,11 +6,12 @@
   </ul>
 
 
-  <div class="container">
-    <div class="row" style="margin-top: 50px; margin-left: 60px;">
 
-      <div class="col">
-        <div class="card" style="width: 22rem; text-align:center">
+  <div class="container">
+    <div class="row" style="margin-top: 30px;">
+
+      <div class="col" style="display: grid; justify-content: center;">
+        <div class="card" style="width: 19rem; text-align:center">
           <a href="http://ahdas.drnh.gov.tw/" target="_blank" style="text-decoration:none;color:black;">
             <div>
               <img :src="require(`@/assets/img/slider/1.jpg`)" 
@@ -25,8 +26,8 @@
         </div>   
       </div>
 
-      <div class="col">
-        <div class="card" style="width: 22rem; text-align:center">
+      <div class="col" style="display: grid; justify-content: center;">
+        <div class="card" style="width: 19rem; text-align:center">
           <a href="https://onlinearchives.th.gov.tw/index.php?act=Archive" target="_blank" style="text-decoration:none;color:black;">
             <div>
               <img :src="require(`@/assets/img/slider/2.jpg`)" 
@@ -45,10 +46,10 @@
   </div>
 
   <div class="container">
-    <div class="row" style="margin-top: 50px; margin-left: 60px;">
+    <div class="row" style="margin-top: 45px;">
 
-      <div class="col">
-        <div class="card" style="width: 22rem; text-align:center">
+      <div class="col" style="display: grid; justify-content: center;">
+        <div class="card" style="width: 19rem; text-align:center">
           <a href="https://drtpa.th.gov.tw/" target="_blank" style="text-decoration:none;color:black;">
             <div>
               <img :src="require(`@/assets/img/slider/3.jpg`)" 
@@ -63,8 +64,8 @@
         </div>   
       </div>
 
-      <div class="col">
-        <div class="card" style="width: 22rem; text-align:center">
+      <div class="col" style="display: grid; justify-content: center;">
+        <div class="card" style="width: 19rem; text-align:center">
           <a href="http://journal.th.gov.tw/" target="_blank" style="text-decoration:none;color:black;">
             <div>
               <img :src="require(`@/assets/img/slider/4.jpg`)" 
@@ -84,18 +85,6 @@
 
 
    
-
-    
-
-
-     
-
-
-
-
-
-
- 
 </template>
 
 
