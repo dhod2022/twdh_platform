@@ -9,7 +9,7 @@
           class="form-control form-control-lg"
           name="email"
         /><br>
-        <span class="register_password_apply">* 本中心同意後，密碼將寄至此信箱</span>
+        <span class="register_password_apply">* 本中心同意後，密碼將寄至此信箱</span><br><br>
         <label class="form-label">姓名：</label>
         <Field 
           type="text"
