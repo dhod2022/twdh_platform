@@ -59,7 +59,7 @@
 
 
 
-  <div style="margin-bottom: 150px;"></div>
+  <div style="margin-bottom: 280px;"></div>
 </template>
 
 <script>
