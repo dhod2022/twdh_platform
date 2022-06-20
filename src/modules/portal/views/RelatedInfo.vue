@@ -13,7 +13,7 @@
                     <h5 class="card-title" style="font-weight: bold;">開發團隊</h5>
                     <h6 class="card-subtitle mb-2 text-muted">臺大數位人文研究中心規劃設計，項潔教授主持。</h6>
                     <p class="card-text">
-                        臺大資訊工程學系暨研究所、資訊網路與多媒體研究所學生-
+                        臺大資訊工程學系暨研究所、資訊網路與多媒體研究所學生–&nbsp;
                         董光立、陳泂杋、高正玥、陳詩淇、蔡念成、陳昱安、高聖傑、王偉吉，負責平台開發。
                     </p>        
                 </div>
