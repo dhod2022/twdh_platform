@@ -22,6 +22,7 @@
             建立新資料夾
         </button>
       </form>
+	
       <table class="dirList">
         <tr v-for="dir in dirs">
           <button type="submit" @click="getDocs(dir)" name="listDocs" class="btn-link">
@@ -65,7 +66,11 @@
                   </select>
                   <button @click="moveDoc()" class="docBtn">將勾選資料移動到其他資料夾</button>
               </form>
-              <button @click="removeDoc()" class="docBtn deleteBtn">刪除勾選資料</button>
+              <button @click="removeDoc()" class="docBtn deleteBtn">刪除勾選資料</button><br>
+              <div id="app">
+		    <br><button type="button" class="btn" @click="showModal" style="border: 1px solid #000000; margin-top: 5px; background-color: lightblue;">匯出所選Metadata</button>
+		    <modal v-if="isModalVisible" @close="closeModal" :Metadata="Metadata" :username="username"/>
+		</div>
           </div>
           <ul>
             <li v-for="doc in docs" class="docBlock" :key="doc.ID">
@@ -92,6 +97,7 @@
       <div v-else>
         選擇一個資料夾以查看資料
       </div>
+      
     </div>
   </div>
   <div v-else>
@@ -107,7 +113,8 @@
 import axios from 'axios';
 import VueCookies from 'vue-cookies';
 import PageTitle from '../../portal/components/PageTitle'
-
+import modal from '../../../components/Modal.vue';
+import { toRaw } from "vue";
 
 
 let dirID = 1;
@@ -130,11 +137,14 @@ export default {
       csvFile: '',
       copyTargetDir: '',
       moveTargetDir: '',
-      checkedDocs: []
+      checkedDocs: [],
+      Metadata: '',
+      isModalVisible: false,
     }
   },
   components: {
     PageTitle,
+    modal,
   },
   methods: {
     prevPage(){
@@ -286,7 +296,6 @@ export default {
         alert("請選擇當前資料夾以外的資料夾");
         stopCopy = true;
       }
-
       if(!stopCopy) {
         this.checkedDocs.forEach(doc =>
           axios({
@@ -377,6 +386,33 @@ export default {
         this.getDocs(this.curDir);
       }
     },
+    showModal() {
+      		var data = [], config;
+      		this.checkedDocs.forEach(doc => data.push(toRaw(doc)));
+      		console.log(data);
+      		if (data.length == 0) {
+      			this.docs.forEach(doc => data.push(toRaw(doc)));
+      			alert("沒有勾選任何Metadata，因此匯出資料夾下的所有Metadata");
+      		}
+	  	this.Metadata = data;
+		this.isModalVisible = true;
+	      /*axios({
+		  credentials: "include",
+		  method: "get",
+		  url: curBackend + "getData.php",
+		  params: {listDocs: "a", username: this.username},
+		  headers: {"Content-Type": "application/json"},
+		  crossdomain: true,
+	      }).then(
+		  (response) => {
+		  	this.Metadata = response.data.list;
+        		this.isModalVisible = true;
+		   }
+	      );*/
+      },
+      closeModal() {
+        this.isModalVisible = false;
+      }
   },
   mounted() {
     this.displayName = $cookies.get("display_name");
