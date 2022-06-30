@@ -68,10 +68,11 @@
               </form>
               <button @click="removeDoc()" class="docBtn deleteBtn">刪除勾選資料</button><br>
               <div id="app">
-		    <br><button type="button" class="btn" @click="showModal" style="border: 1px solid #000000; margin-top: 5px; background-color: lightblue;">匯出所選Metadata</button>
-		    <modal v-if="isModalVisible" @close="closeModal" :Metadata="Metadata" :username="username"/>
-		</div>
+		            <br><button type="button" class="btn" @click="showModal" style="border: 1px solid #000000; margin-top: 5px; background-color: lightblue;position:relative;top:10px;">匯出所選Metadata</button>
+		            <modal v-if="isModalVisible" @close="closeModal" :Metadata="Metadata" :username="username"/>
+		          </div>
           </div>
+          <br>
           <ul>
             <li v-for="doc in docs" class="docBlock" :key="doc.ID">
               <input type="checkbox" v-model="checkedDocs" :value="doc" class="checkBox"/>
@@ -512,11 +513,15 @@ export default {
   border: 2px solid black;
   left: 20px;
   padding: 2px;
+  width:220px;
+  font-size:20px;
 }
 
 .newDirBtn {
   position: relative;
   left: 30px;
+  width:150px;
+  font-size:20px;
 }
 
 .uploadBox {
@@ -601,7 +606,7 @@ export default {
   background-color: #f0ede1;
   position: relative;
   display: inline;
-  height: 30px;
+  height: 40px;
   border-radius: 0px;
   border: 2px solid #317284;
   padding: 5px;
@@ -611,7 +616,7 @@ export default {
 .docBtn {
   background-color: #e2d396;
   position: relative;
-  height: 30px;
+  height: 40px;
   border-radius: 0px;
   padding: 5px;
   border: 2px solid #317284;
