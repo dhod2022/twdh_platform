@@ -271,8 +271,10 @@ export default {
         (response) => {
           console.log("no error in submit csv");
           console.log(response.data);
+          alert(response.data);
           this.csvFile = '';
           this.$refs.csvFile.value = null;
+          this.getDocs(this.curDir);
         }
       )
       .catch(function(error){
@@ -287,6 +289,7 @@ export default {
 
     copyDoc() {
       let stopCopy = false;
+      let allSuccess = true;
       console.log(this.copyTargetDir);
       if(this.copyTargetDir == '') {
         alert("請選擇目標資料夾後再點選此按鈕");
@@ -296,13 +299,14 @@ export default {
         alert("請選擇當前資料夾以外的資料夾");
         stopCopy = true;
       }
+
       if(!stopCopy) {
         this.checkedDocs.forEach(doc =>
           axios({
               credentials: "include",
               method: "get",
               url: curBackend + "copyDoc.php",
-              params: {username: this.username, docID: doc.Metadata_ID, targetDir: this.copyTargetDir},
+              params: {username: this.username, docID: doc.ID, targetDir: this.copyTargetDir},
               headers: {"Content-Type": "application/json"},
               crossdomain: true,
           }).then(
@@ -314,15 +318,19 @@ export default {
             // Error handling
             console.log("error: in method copyDoc()");
             console.error(error);
+            allSuccess = false;
           })
         )
-        alert("成功複製文件");
+        if(allSuccess) {
+          alert("成功複製文件");
+        }
         this.copyTargetDir = ''
       }
     },
    
     moveDoc() {
       let stopMove = false;
+      let allSuccess = true;
       console.log(this.checkedDocs);
       if(this.moveTargetDir == '') {
         alert("請選擇目標資料夾後再點選此按鈕");
@@ -339,7 +347,39 @@ export default {
               credentials: "include",
               method: "get",
               url: curBackend + "moveDoc.php",
-              params: {username: this.username, docID: doc.ID, docMetaID: doc.Metadata_ID, targetDir: this.moveTargetDir},
+              params: {username: this.username, docID: doc.ID, targetDir: this.moveTargetDir},
+              headers: {"Content-Type": "application/json"},
+              crossdomain: true,
+          }).then(
+              (response) => {
+                console.log("move documents success");
+                console.log(response.data);
+              }
+          ).catch(function(error){ 
+            // Error handling
+            allSuccess = false;
+            console.log("error: in method moveDoc()");
+            console.error(error);
+          })
+        )
+        if(allSuccess) {
+          alert("成功移動文件");
+        }
+        this.getDocs(this.curDir);
+        this.moveTargetDir = '';
+      }
+    },
+
+    removeDoc() {
+      console.log(this.checkedDocs);
+      let allSuccess = true;
+      if(confirm("確認要刪除這些文件嗎？") == true) {
+        this.checkedDocs.forEach(doc =>
+          axios({
+              credentials: "include",
+              method: "get",
+              url: curBackend + "removeDoc.php",
+              params: {username: this.username, docID: doc.ID},
               headers: {"Content-Type": "application/json"},
               crossdomain: true,
           }).then(
@@ -348,41 +388,14 @@ export default {
               }
           ).catch(function(error){ 
             // Error handling
-            console.log("error: in method moveDoc()");
+            allSuccess = false;
+            console.log("error: in method removeDoc()");
             console.error(error);
           })
         )
-        alert("成功移動文件");
-        this.getDocs(this.curDir);
-        this.moveTargetDir = '';
-      }
-    },
-
-    removeDoc() {
-      console.log(this.checkedDocs);
-      if(confirm("確認要刪除這些文件嗎？") == true) {
-        this.checkedDocs.forEach(doc =>
-            axios({
-                credentials: "include",
-                method: "get",
-                url: curBackend + "removeDoc.php",
-                params: {username: this.username, docID: doc.ID},
-                headers: {"Content-Type": "application/json"},
-                crossdomain: true,
-            }).then(
-                (response) => {
-                  console.log(response.data);
-                  if(response.data == true) {
-                    alert("刪除成功");
-                  }
-                }
-            ).catch(function(error){ 
-              // Error handling
-              console.log("error: in method removeDoc()");
-              console.error(error);
-            })
-          )
-        
+        if(allSuccess) {
+          alert("成功刪除文件");
+        }
         this.getDocs(this.curDir);
       }
     },
