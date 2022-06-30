@@ -425,7 +425,6 @@ export default {
         crossdomain: true,
     }).then(
         (response) => {
-            this.login = true;
           console.log("get response from getUsername.php:");
           console.log(response.data);
           this.username = response.data;
