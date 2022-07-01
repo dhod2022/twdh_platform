@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios';
+import { toRaw } from "vue";
 import tsainiancheng_mission5 from '../modules/opendata/js/tsai.js';
 
 const default_mapping = {'Metadata_ID': 'filename', '來源系統': 'doc_source', '來源系統縮寫': 'metadata/doc_source', '文件原系統頁面URL': 'metadata/doc_source_href',
@@ -74,6 +75,7 @@ var col_arr;
 	  database_name: "default",
 	  corpus_name: "corpus",
 	  DocuXML: "",
+	  DocuXMLobj: "",
 	 }
 	},
     methods: {
@@ -91,31 +93,34 @@ var col_arr;
 		config['DocuXML_filename'] = config['DocuXML_filename'] + '.xml';
 		var DocuXML = tsainiancheng_mission5.processing(data, config);
 		this.DocuXML = DocuXML["file"]["value"];
+		this.DocuXMLobj = DocuXML;
     	},
       	UploadDocuXML2DocuSky() {
       		SessionKey = "DocuSky_SID=" + $cookies.get("DocuSky_SID");
-		docuskyManageDbListSimpleUI.uploadMultipart(this.DocuXML, function(data) {alert("DocuSky 上傳成功");}, function() {alert("DocuSky 上傳失敗");});
+      		var DocuXMLobj = toRaw(this.DocuXMLobj);
+		docuskyManageDbListSimpleUI.uploadMultipart(DocuXMLobj, function(data) {alert("DocuSky 上傳成功");}, function() {alert("DocuSky 上傳失敗");});
 		
 		  var formData = [];
 		  var UserId = 10489;
-		  /*$.post("../../../OD/webApi/getUserIdFromUserName.php", {"username": this.username}, function(data){
-		    console.log(data.message);
-		    UserId = data.message;
-		  });*/
+		  $.post("../../../OD/webApi/getUserIdFromUserName.php", {"username": this.username}, function(data){
+		    	UserId = data.message;
+		    
+    		  	formData[0] = {};
+			  formData[0]["name"] = "dbTitleForImport";
+			  formData[0]["value"] = "dbTitle";
+			  formData[1] = {};
+			  formData[1]["name"] = "type";
+			  formData[1]["value"] = "XML";
+			  formData[2] = {};
+			  formData[2]["name"] = "userId";
+			  formData[2]["value"] = UserId;
+			  
+			formData.file = Object.assign({}, DocuXMLobj.file);
+			formData.file["name"] = "importedFiles";
+			odManageDbListSimpleUI.uploadTempFiles(formData, function(data) {alert("OD 上傳成功");}, function() {alert("OD 上傳失敗");});
+		  });
 		  
-		  formData[0] = {};
-		  formData[0]["name"] = "dbTitleForImport";
-		  formData[0]["value"] = "dbTitle";
-		  formData[1] = {};
-		  formData[1]["name"] = "type";
-		  formData[1]["value"] = "XML";
-		  formData[2] = {};
-		  formData[2]["name"] = "userId";
-		  formData[2]["value"] = UserId;
-		  
-		formData.file = Object.assign({}, this.DocuXML.file);
-		formData.file["name"] = "importedFiles";
-		odManageDbListSimpleUI.uploadTempFiles(formData, function(data) {alert("OD 上傳成功");}, function() {alert("OD 上傳失敗");});
+
 		
 		//axios.post("https://skolem.csie.ntu.edu.tw/OD/tsainiancheng/saveDocuXML.php", {DocuXML: this.DocuXML, filename: "DocuXML.xml"}).then(function(response) {});
 		
